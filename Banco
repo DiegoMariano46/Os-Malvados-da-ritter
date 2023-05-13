@@ -1,0 +1,99 @@
+#include <iostream>
+using namespace std;
+
+class Usuario {
+public:
+  string nome;
+  double saldo;
+  int num_conta;
+  int agencia;
+  string senha;
+};
+
+int main() {
+
+  double sacar, dep;
+  int op;
+  Usuario usuarios[2];
+  int usuario_ativo;
+  string senha;
+  char menu;
+
+  usuarios[0].nome = "Diego";
+  usuarios[0].num_conta = 1;
+  usuarios[0].agencia = 1;
+  usuarios[0].saldo = 0;
+  usuarios[0].senha = "senha";
+
+  usuarios[1].nome = "Ricardo";
+  usuarios[1].num_conta = 2;
+  usuarios[1].agencia = 1;
+  usuarios[1].saldo = 0;
+  usuarios[1].senha = "senha2";
+
+  while (menu != 's') {
+    cout << "Você deseja sair?" << endl;
+    cout << "S para sair" << endl;
+    cin >> menu;
+    if (menu != 's') {
+      cout << "Informe seu usuario: " << endl;
+      cin >> usuario_ativo;
+      cout << "Senha: ";
+      cin >> senha;
+
+      while (senha != usuarios[usuario_ativo - 1].senha) {
+        cout << "sua senha está incorreta" << endl;
+        cout << "Digite novamente sua senha: " << endl;
+        cin >> senha;
+      }
+      do {
+        cout << "Qual sua escolha: " << endl;
+        cout << "1-sacar" << endl;
+        cout << "2-depositar" << endl;
+        cout << "3-saldo" << endl;
+        cout << "4-sair" << endl;
+        cout << usuarios[usuario_ativo - 1].nome << endl;
+        cout << usuarios[usuario_ativo - 1].num_conta << " | "
+             << usuarios[usuario_ativo - 1].agencia << endl;
+        cin >> op;
+        if (op == 1) // operação para sacar.
+        {
+          cout << "Qual o valor do saque?" << endl;
+          cin >> sacar;
+          if (usuarios[usuario_ativo - 1].saldo <= 0) {
+            cout << "Saldo insuficiente" << endl;
+          } else if (sacar > usuarios[usuario_ativo - 1].saldo) {
+            cout << "Saldo insuficiente" << endl;
+          } else {
+            usuarios[usuario_ativo - 1].saldo =
+                usuarios[usuario_ativo - 1].saldo - sacar;
+            cout << "o valor que você sacou foi R$ " << sacar
+                 << " e o seu saldo é de:R$ "
+                 << usuarios[usuario_ativo - 1].saldo << endl;
+          }
+        } else if (op == 2) // operação para depositar.
+        {
+          cout << "Qual valor que quer depositar?";
+          cin >> dep;
+          if (dep < 0) {
+            cout << "Valor incorreto" << endl;
+          } else {
+            usuarios[usuario_ativo - 1].saldo =
+                dep + usuarios[usuario_ativo - 1].saldo;
+            cout << "Você depositou R$ " << dep << " e seu saldo é de R$ "
+                 << usuarios[usuario_ativo - 1].saldo << endl;
+          }
+        } else if (op == 3) // operaçao para ver o saldo.
+        {
+          cout << "SR " << usuarios[usuario_ativo - 1].nome
+               << " o seu saldo é de R$ " << usuarios[usuario_ativo - 1].saldo
+               << endl;
+        }
+      } while (op != 4);
+      menu = 'n';
+
+    } else {
+      cout << "saindo";
+    }
+  }
+}
